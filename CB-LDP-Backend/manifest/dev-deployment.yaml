@@ -1,0 +1,70 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: cb-ldp-backend
+  namespace: cb-ldp-dev
+spec:
+  minReadySeconds: 15
+  selector:
+    matchLabels:
+      app : cb-ldp-backend
+  replicas: 1 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      name: cb-ldp-backend
+      labels:
+        app: cb-ldp-backend
+    spec:
+      containers:
+      - name: cb-ldp-backend
+        image: INPUT_PARAMS
+        imagePullPolicy: Always
+        # envFrom:
+        #   - configMapRef:
+        #       name: mongo-mapping
+        ports:
+        - containerPort: 4000
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-updated-secret
+                key: MONGO_LDP_USER
+                optional: false 
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-updated-secret
+                key: MONGO_LDP_PASSWORD
+                optional: false
+          - name: ENV
+            value: "dev"
+      
+        resources:
+          limits:
+            memory: 1500Mi
+          requests:
+            cpu: 300m
+            memory: 500Mi
+      # nodeSelector:
+      #   Group: cb-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: cb-ldp-backend
+ namespace: cb-ldp-dev
+spec:
+ selector:
+   app : cb-ldp-backend
+ ports:
+   - name: http
+     port: 4000
+ type: ClusterIP

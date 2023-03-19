@@ -1,0 +1,13 @@
+[{
+  "createIndexes": "modules",
+  "indexes": [
+    {
+      "key": {
+        "module_name": 1
+      },
+      "name": "unique_module_name",
+      "unique": true,
+      "background": true
+    }
+  ]
+}]

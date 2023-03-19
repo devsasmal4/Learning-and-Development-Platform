@@ -1,0 +1,12 @@
+{
+    "env": "staging",
+    "mongo_url": "mongodb://mongodb-dev.cb-ldp-dev.svc.cluster.local:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.0",
+    "database_name": "cb_ldp_development",
+    "secretKey":"9PbNFG7SCsm7y5sQdF3a",
+    "dir_path": "/tmp/",
+    "host": "20.204.189.38:4000",
+    "refresh_token": "1000.560988b320a01d09beb593fc5d781fab.38801ab6f9b4cb53704ff444140aea70",
+    "client_id": "1000.MK2TJNTTGF76VHEQ2ASSDYBVEKPT4O",
+    "client_secret": "622ba693d282d5af188cb69496c441c3126dfcdf53"
+}
+

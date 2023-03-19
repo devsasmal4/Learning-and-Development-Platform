@@ -1,0 +1,980 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Coffeebeans learning and development.",
+        "title": "Coffbeans Quiz API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:4000",
+    "basePath": "/",
+    "paths": {
+        "/module": {
+            "post": {
+                "description": "Create module",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create module",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Module request body",
+                        "name": "entity.Module",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Module"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Module"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Error creating quiz",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/module/{moduleId}": {
+            "get": {
+                "description": "View module",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "View module",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Module Id",
+                        "name": "moduleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ModuleViewResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Module not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update module",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update module",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Module Id",
+                        "name": "moduleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated module request body",
+                        "name": "entity.Module",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Module"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Module not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Error updating module",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/module/{moduleId}/instructions": {
+            "get": {
+                "description": "View module instructions",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "View module instructions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Module Id",
+                        "name": "moduleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ModuleInstructionsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Module not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/module/{moduleId}/testDetails": {
+            "get": {
+                "description": "Get test details",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get test details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Module Id",
+                        "name": "moduleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/response.TestDetailsResponse"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Module not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/question/upload": {
+            "post": {
+                "description": "Upload CSV",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Upload CSV",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Questionaires in CSV format",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.QuestionJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Error creating CSV",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/question/{questionId}": {
+            "delete": {
+                "description": "Delete question",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Delete question",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Question Id",
+                        "name": "questionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Question not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Error deleting options",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/question/{questionId}/answer/{optionId}": {
+            "get": {
+                "description": "Get correct answer",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get correct answer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Question Id",
+                        "name": "questionId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Option Id",
+                        "name": "optionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.AnswerResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Question not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/quiz/execute": {
+            "post": {
+                "description": "Quiz execution",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Quiz execution",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Quiz response body",
+                        "name": "entity.QuizResponse",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.QuizResponse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.QuizResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Module not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/quiz/{moduleId}": {
+            "get": {
+                "description": "View quiz",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "View quiz",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email Id",
+                        "name": "Email",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Module Id",
+                        "name": "moduleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.QuizQuestions"
+                        }
+                    },
+                    "404": {
+                        "description": "Module not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/createToken": {
+            "post": {
+                "description": "Create token",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create token",
+                "parameters": [
+                    {
+                        "description": "User request body",
+                        "name": "entity.User",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "entity.Module": {
+            "type": "object",
+            "required": [
+                "module_created_by",
+                "module_created_on",
+                "module_department",
+                "module_description",
+                "module_instructions",
+                "module_name",
+                "module_quiz",
+                "module_study_material"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "module_completion_date": {
+                    "type": "string"
+                },
+                "module_created_by": {
+                    "type": "string"
+                },
+                "module_created_on": {
+                    "type": "string"
+                },
+                "module_department": {
+                    "type": "string"
+                },
+                "module_description": {
+                    "type": "string"
+                },
+                "module_instructions": {
+                    "type": "array",
+                    "maxItems": 20,
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "module_name": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "module_quiz": {
+                    "$ref": "#/definitions/entity.Quiz"
+                },
+                "module_status": {
+                    "type": "boolean"
+                },
+                "module_study_material": {
+                    "type": "string",
+                    "maxLength": 200
+                }
+            }
+        },
+        "entity.Option": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "is_correct": {
+                    "type": "boolean"
+                },
+                "option_score": {
+                    "type": "integer",
+                    "minimum": -10
+                },
+                "option_string": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 1
+                },
+                "question_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.Question": {
+            "type": "object",
+            "required": [
+                "question_options",
+                "question_text"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "answer_explanation": {
+                    "type": "string",
+                    "maxLength": 1000,
+                    "minLength": 10
+                },
+                "question_options": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Option"
+                    }
+                },
+                "question_text": {
+                    "type": "string",
+                    "maxLength": 200
+                },
+                "quiz_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.Quiz": {
+            "type": "object",
+            "required": [
+                "quiz_name",
+                "quiz_questionaires",
+                "quiz_total_marks"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "module_id": {
+                    "type": "string"
+                },
+                "quiz_duration_minutes": {
+                    "type": "integer",
+                    "default": -1,
+                    "minimum": -1
+                },
+                "quiz_name": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "quiz_passing_marks": {
+                    "type": "integer",
+                    "maximum": 1000,
+                    "minimum": 1
+                },
+                "quiz_questionaires": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Question"
+                    }
+                },
+                "quiz_total_marks": {
+                    "type": "integer",
+                    "maximum": 1000,
+                    "minimum": 1
+                }
+            }
+        },
+        "entity.QuizResponse": {
+            "type": "object",
+            "required": [
+                "module_id",
+                "quiz_score"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "module_id": {
+                    "type": "string"
+                },
+                "quiz_result": {
+                    "type": "boolean"
+                },
+                "quiz_score": {
+                    "type": "integer"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.User": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "time_logged_in": {
+                    "type": "integer"
+                },
+                "user_mail": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 1
+                },
+                "user_name": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 1
+                },
+                "user_role": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.AnswerResponse": {
+            "type": "object",
+            "properties": {
+                "answer_explanation": {
+                    "type": "string"
+                },
+                "correct_answer": {
+                    "type": "string"
+                },
+                "score_earned": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.ModuleInstructionsResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "module_instructions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "module_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ModuleViewResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "module_description": {
+                    "type": "string"
+                },
+                "module_name": {
+                    "type": "string"
+                },
+                "module_study_material": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.OptionResponse": {
+            "type": "object",
+            "properties": {
+                "is_correct": {
+                    "type": "boolean"
+                },
+                "option_score": {
+                    "type": "integer"
+                },
+                "option_string": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.QuestionJsonResponse": {
+            "type": "object",
+            "properties": {
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.QuestionResponse"
+                    }
+                },
+                "total_marks": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.QuestionResponse": {
+            "type": "object",
+            "properties": {
+                "answer_explanation": {
+                    "type": "string"
+                },
+                "question_options": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.OptionResponse"
+                    }
+                },
+                "question_text": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.QuizQuestions": {
+            "type": "object",
+            "properties": {
+                "module_name": {
+                    "type": "string"
+                },
+                "quiz_name": {
+                    "type": "string"
+                },
+                "quiz_questionaires": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Question"
+                    }
+                }
+            }
+        },
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "response_data": {},
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.TestDetailsResponse": {
+            "type": "object",
+            "properties": {
+                "duration": {
+                    "type": "string"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "module_name": {
+                    "type": "string"
+                },
+                "quiz_result": {
+                    "type": "boolean"
+                },
+                "quiz_score": {
+                    "type": "integer"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "test_status": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.UserResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "user_mail": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                },
+                "user_role": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

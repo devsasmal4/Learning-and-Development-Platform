@@ -1,0 +1,6 @@
+[
+    {
+      "dropIndexes": "modules",
+      "index": "unique_module_name"
+    }
+  ]

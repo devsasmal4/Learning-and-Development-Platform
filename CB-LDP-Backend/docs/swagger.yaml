@@ -1,0 +1,663 @@
+basePath: /
+definitions:
+  entity.Module:
+    properties:
+      _id:
+        type: string
+      module_completion_date:
+        type: string
+      module_created_by:
+        type: string
+      module_created_on:
+        type: string
+      module_department:
+        type: string
+      module_description:
+        type: string
+      module_instructions:
+        items:
+          type: string
+        maxItems: 20
+        minItems: 1
+        type: array
+        uniqueItems: true
+      module_name:
+        maxLength: 100
+        type: string
+      module_quiz:
+        $ref: '#/definitions/entity.Quiz'
+      module_status:
+        type: boolean
+      module_study_material:
+        maxLength: 200
+        type: string
+    required:
+    - module_created_by
+    - module_created_on
+    - module_department
+    - module_description
+    - module_instructions
+    - module_name
+    - module_quiz
+    - module_study_material
+    type: object
+  entity.Option:
+    properties:
+      _id:
+        type: string
+      is_correct:
+        type: boolean
+      option_score:
+        minimum: -10
+        type: integer
+      option_string:
+        maxLength: 250
+        minLength: 1
+        type: string
+      question_id:
+        type: string
+    type: object
+  entity.Question:
+    properties:
+      _id:
+        type: string
+      answer_explanation:
+        maxLength: 1000
+        minLength: 10
+        type: string
+      question_options:
+        items:
+          $ref: '#/definitions/entity.Option'
+        type: array
+      question_text:
+        maxLength: 200
+        type: string
+      quiz_id:
+        type: string
+    required:
+    - question_options
+    - question_text
+    type: object
+  entity.Quiz:
+    properties:
+      _id:
+        type: string
+      module_id:
+        type: string
+      quiz_duration_minutes:
+        default: -1
+        minimum: -1
+        type: integer
+      quiz_name:
+        maxLength: 100
+        type: string
+      quiz_passing_marks:
+        maximum: 1000
+        minimum: 1
+        type: integer
+      quiz_questionaires:
+        items:
+          $ref: '#/definitions/entity.Question'
+        type: array
+      quiz_total_marks:
+        maximum: 1000
+        minimum: 1
+        type: integer
+    required:
+    - quiz_name
+    - quiz_questionaires
+    - quiz_total_marks
+    type: object
+  entity.QuizResponse:
+    properties:
+      _id:
+        type: string
+      end_date:
+        type: string
+      module_id:
+        type: string
+      quiz_result:
+        type: boolean
+      quiz_score:
+        type: integer
+      start_date:
+        type: string
+      user_id:
+        type: string
+    required:
+    - module_id
+    - quiz_score
+    type: object
+  entity.User:
+    properties:
+      _id:
+        type: string
+      time_logged_in:
+        type: integer
+      user_mail:
+        maxLength: 50
+        minLength: 1
+        type: string
+      user_name:
+        maxLength: 50
+        minLength: 1
+        type: string
+      user_role:
+        type: string
+    type: object
+  response.AnswerResponse:
+    properties:
+      answer_explanation:
+        type: string
+      correct_answer:
+        type: string
+      score_earned:
+        type: integer
+    type: object
+  response.ModuleInstructionsResponse:
+    properties:
+      id:
+        type: string
+      module_instructions:
+        items:
+          type: string
+        type: array
+      module_name:
+        type: string
+    type: object
+  response.ModuleViewResponse:
+    properties:
+      id:
+        type: string
+      module_description:
+        type: string
+      module_name:
+        type: string
+      module_study_material:
+        type: string
+    type: object
+  response.OptionResponse:
+    properties:
+      is_correct:
+        type: boolean
+      option_score:
+        type: integer
+      option_string:
+        type: string
+    type: object
+  response.QuestionJsonResponse:
+    properties:
+      questions:
+        items:
+          $ref: '#/definitions/response.QuestionResponse'
+        type: array
+      total_marks:
+        type: integer
+    type: object
+  response.QuestionResponse:
+    properties:
+      answer_explanation:
+        type: string
+      question_options:
+        items:
+          $ref: '#/definitions/response.OptionResponse'
+        type: array
+      question_text:
+        type: string
+    type: object
+  response.QuizQuestions:
+    properties:
+      module_name:
+        type: string
+      quiz_name:
+        type: string
+      quiz_questionaires:
+        items:
+          $ref: '#/definitions/entity.Question'
+        type: array
+    type: object
+  response.Response:
+    properties:
+      message:
+        type: string
+      response_data: {}
+      status:
+        type: integer
+    type: object
+  response.TestDetailsResponse:
+    properties:
+      duration:
+        type: string
+      end_date:
+        type: string
+      id:
+        type: string
+      module_name:
+        type: string
+      quiz_result:
+        type: boolean
+      quiz_score:
+        type: integer
+      start_date:
+        type: string
+      test_status:
+        type: string
+      user_name:
+        type: string
+    type: object
+  response.UserResponse:
+    properties:
+      id:
+        type: string
+      token:
+        type: string
+      user_mail:
+        type: string
+      user_name:
+        type: string
+      user_role:
+        type: string
+    type: object
+host: localhost:4000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Coffeebeans learning and development.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Coffbeans Quiz API
+  version: "1.0"
+paths:
+  /module:
+    post:
+      description: Create module
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Module request body
+        in: body
+        name: entity.Module
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Module'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Module'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Error creating quiz
+          schema:
+            type: string
+      summary: Create module
+  /module/{moduleId}:
+    get:
+      description: View module
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Module Id
+        in: path
+        name: moduleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ModuleViewResponse'
+        "404":
+          description: Module not found
+          schema:
+            type: string
+      summary: View module
+    put:
+      description: Update module
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Module Id
+        in: path
+        name: moduleId
+        required: true
+        type: string
+      - description: Updated module request body
+        in: body
+        name: entity.Module
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Module'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Module not found
+          schema:
+            type: string
+        "500":
+          description: Error updating module
+          schema:
+            type: string
+      summary: Update module
+  /module/{moduleId}/instructions:
+    get:
+      description: View module instructions
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Module Id
+        in: path
+        name: moduleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ModuleInstructionsResponse'
+        "404":
+          description: Module not found
+          schema:
+            type: string
+      summary: View module instructions
+  /module/{moduleId}/testDetails:
+    get:
+      description: Get test details
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Module Id
+        in: path
+        name: moduleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/response.TestDetailsResponse'
+            type: array
+        "404":
+          description: Module not found
+          schema:
+            type: string
+        "500":
+          description: Server Error
+          schema:
+            type: string
+      summary: Get test details
+  /question/{questionId}:
+    delete:
+      description: Delete question
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Question Id
+        in: path
+        name: questionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Question not found
+          schema:
+            type: string
+        "500":
+          description: Error deleting options
+          schema:
+            type: string
+      summary: Delete question
+  /question/{questionId}/answer/{optionId}:
+    get:
+      description: Get correct answer
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Question Id
+        in: path
+        name: questionId
+        required: true
+        type: string
+      - description: Option Id
+        in: path
+        name: optionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AnswerResponse'
+        "404":
+          description: Question not found
+          schema:
+            type: string
+        "500":
+          description: Server Error
+          schema:
+            type: string
+      summary: Get correct answer
+  /question/upload:
+    post:
+      description: Upload CSV
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Questionaires in CSV format
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.QuestionJsonResponse'
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Error creating CSV
+          schema:
+            type: string
+      summary: Upload CSV
+  /quiz/{moduleId}:
+    get:
+      description: View quiz
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Module Id
+        in: path
+        name: moduleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.QuizQuestions'
+        "404":
+          description: Module not found
+          schema:
+            type: string
+        "500":
+          description: Server Error
+          schema:
+            type: string
+      summary: View quiz
+  /quiz/execute:
+    post:
+      description: Quiz execution
+      parameters:
+      - description: Email Id
+        in: header
+        name: Email
+        required: true
+        type: string
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Quiz response body
+        in: body
+        name: entity.QuizResponse
+        required: true
+        schema:
+          $ref: '#/definitions/entity.QuizResponse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.QuizResponse'
+        "404":
+          description: Module not found
+          schema:
+            type: string
+        "500":
+          description: Server Error
+          schema:
+            type: string
+      summary: Quiz execution
+  /user/createToken:
+    post:
+      description: Create token
+      parameters:
+      - description: User request body
+        in: body
+        name: entity.User
+        required: true
+        schema:
+          $ref: '#/definitions/entity.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Create token
+schemes:
+- http
+swagger: "2.0"
